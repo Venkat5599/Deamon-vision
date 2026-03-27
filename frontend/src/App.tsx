@@ -174,7 +174,7 @@ function App() {
             <div className="flex items-center gap-4">
               <span>Tracks: {tracks.length}</span>
               <span>•</span>
-              <span className={isConnected ? 'text-primary' : 'text-destructive'}>
+              <span className={isConnected ? 'text-foreground font-semibold' : 'text-muted-foreground'}>
                 {isConnected ? 'CONNECTED' : 'DISCONNECTED'}
               </span>
             </div>

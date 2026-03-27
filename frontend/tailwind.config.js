@@ -15,38 +15,38 @@ export default {
     },
     extend: {
       colors: {
-        border: "hsl(217 10% 20%)",
-        input: "hsl(217 10% 20%)",
-        ring: "hsl(142 76% 36%)",
-        background: "hsl(222 47% 5%)",
-        foreground: "hsl(210 20% 90%)",
+        border: "hsl(0 0% 90%)",
+        input: "hsl(0 0% 95%)",
+        ring: "hsl(0 0% 10%)",
+        background: "hsl(0 0% 100%)",
+        foreground: "hsl(0 0% 5%)",
         primary: {
-          DEFAULT: "hsl(142 76% 45%)",
-          foreground: "hsl(222 47% 5%)",
+          DEFAULT: "hsl(0 0% 10%)",
+          foreground: "hsl(0 0% 100%)",
         },
         secondary: {
-          DEFAULT: "hsl(217 10% 15%)",
-          foreground: "hsl(210 20% 90%)",
+          DEFAULT: "hsl(0 0% 96%)",
+          foreground: "hsl(0 0% 10%)",
         },
         destructive: {
-          DEFAULT: "hsl(0 84% 60%)",
-          foreground: "hsl(210 20% 98%)",
+          DEFAULT: "hsl(0 0% 20%)",
+          foreground: "hsl(0 0% 100%)",
         },
         muted: {
-          DEFAULT: "hsl(217 10% 15%)",
-          foreground: "hsl(215 10% 60%)",
+          DEFAULT: "hsl(0 0% 96%)",
+          foreground: "hsl(0 0% 45%)",
         },
         accent: {
-          DEFAULT: "hsl(217 10% 20%)",
-          foreground: "hsl(142 76% 45%)",
+          DEFAULT: "hsl(0 0% 96%)",
+          foreground: "hsl(0 0% 10%)",
         },
         popover: {
-          DEFAULT: "hsl(222 47% 8%)",
-          foreground: "hsl(210 20% 90%)",
+          DEFAULT: "hsl(0 0% 100%)",
+          foreground: "hsl(0 0% 5%)",
         },
         card: {
-          DEFAULT: "hsl(222 47% 8%)",
-          foreground: "hsl(210 20% 90%)",
+          DEFAULT: "hsl(0 0% 98%)",
+          foreground: "hsl(0 0% 5%)",
         },
       },
       borderRadius: {
@@ -55,7 +55,7 @@ export default {
         sm: "calc(0.5rem - 4px)",
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Aeonik Pro', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Consolas', 'monospace'],
       },
       keyframes: {

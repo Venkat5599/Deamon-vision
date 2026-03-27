@@ -79,7 +79,7 @@ export function VideoFeed({
     } else {
       // Draw grid background if no frame
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = 'rgba(0, 230, 57, 0.05)';
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.lineWidth = 1;
       const gridSize = 40;
       
@@ -114,7 +114,7 @@ export function VideoFeed({
   };
 
   return (
-    <Card className="flex-1 overflow-hidden bg-black/50 backdrop-blur">
+    <Card className="flex-1 overflow-hidden bg-card backdrop-blur">
       <CardContent ref={containerRef} className="p-0 h-full relative flex items-center justify-center">
         {/* Controls Overlay */}
         <div className="absolute top-4 right-4 z-10 flex gap-2">
@@ -142,9 +142,9 @@ export function VideoFeed({
         </div>
 
         {/* Status Overlay */}
-        <div className="absolute top-4 left-4 z-10 bg-background/80 backdrop-blur px-3 py-2 rounded-lg border border-border/50">
+        <div className="absolute top-4 left-4 z-10 bg-background/90 backdrop-blur px-3 py-2 rounded-lg border border-border">
           <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse-glow" />
+            <div className="h-2 w-2 rounded-full bg-black" />
             <span className="text-xs font-mono text-muted-foreground">
               REC {new Date().toLocaleTimeString()}
             </span>
@@ -160,7 +160,7 @@ export function VideoFeed({
           width={1920}
           height={1080}
           onClick={handleClick}
-          className="cursor-crosshair scanline"
+          className="cursor-crosshair"
           style={{ 
             imageRendering: 'auto',
             display: 'block'
@@ -171,8 +171,8 @@ export function VideoFeed({
         {tracks.length === 0 && !currentFrame && (
           <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
             <div className="text-center space-y-4 max-w-md px-6">
-              <div className="h-20 w-20 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
-                <Eye className="h-10 w-10 text-primary/50" />
+              <div className="h-20 w-20 mx-auto rounded-full bg-muted flex items-center justify-center">
+                <Eye className="h-10 w-10 text-muted-foreground" />
               </div>
               <div className="space-y-2">
                 <p className="text-lg font-semibold text-foreground">

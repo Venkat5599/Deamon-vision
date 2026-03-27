@@ -19,32 +19,32 @@ export function MetricsDashboard({ tracks, latency }: MetricsDashboardProps) {
       label: 'Active Tracks',
       value: tracks.length,
       icon: Target,
-      color: 'text-blue-400',
+      color: 'text-gray-700',
     },
     {
       label: 'Locked Targets',
       value: lockedCount,
       icon: Activity,
-      color: 'text-primary',
+      color: 'text-foreground',
     },
     {
       label: 'Avg Confidence',
       value: `${(avgConfidence * 100).toFixed(1)}%`,
       icon: Zap,
-      color: 'text-yellow-400',
+      color: 'text-gray-600',
     },
     {
       label: 'Processing Time',
       value: `${latency.toFixed(0)}ms`,
       icon: Clock,
-      color: 'text-purple-400',
+      color: 'text-gray-700',
     },
   ];
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {metrics.map((metric) => (
-        <Card key={metric.label} className="bg-card/50 backdrop-blur">
+        <Card key={metric.label} className="bg-card backdrop-blur">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
@@ -55,7 +55,7 @@ export function MetricsDashboard({ tracks, latency }: MetricsDashboardProps) {
                   {metric.value}
                 </p>
               </div>
-              <metric.icon className={`h-8 w-8 ${metric.color} opacity-80`} />
+              <metric.icon className={`h-8 w-8 ${metric.color}`} />
             </div>
           </CardContent>
         </Card>

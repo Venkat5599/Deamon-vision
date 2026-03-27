@@ -36,42 +36,15 @@
   @apply bg-primary/50;
 }
 
-/* Scanline effect */
-.scanline {
-  position: relative;
-  overflow: hidden;
-}
-
-.scanline::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 50%,
-    rgba(0, 230, 57, 0.03) 50%
-  );
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Glow effect */
-.glow {
-  box-shadow: 0 0 20px rgba(0, 230, 57, 0.3);
-}
-
-.glow-text {
-  text-shadow: 0 0 10px rgba(0, 230, 57, 0.5);
+/* Subtle shadow effect */
+.shadow-subtle {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Grid background */
 .grid-bg {
   background-image: 
-    linear-gradient(rgba(0, 230, 57, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 230, 57, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
   background-size: 20px 20px;
 }

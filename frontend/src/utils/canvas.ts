@@ -23,9 +23,9 @@ export class CanvasRenderer {
     const centerY = this.height / 2;
     const radius = 40;
 
-    this.ctx.strokeStyle = '#00e639';
+    this.ctx.strokeStyle = '#000000';
     this.ctx.lineWidth = 0.5;
-    this.ctx.globalAlpha = 0.5;
+    this.ctx.globalAlpha = 0.3;
 
     // Circle
     this.ctx.beginPath();
@@ -44,7 +44,7 @@ export class CanvasRenderer {
     this.ctx.globalAlpha = 1;
   }
 
-  drawBoundingBox(bbox: BoundingBox, label: string, color: string = '#00e639', isLocked: boolean = false) {
+  drawBoundingBox(bbox: BoundingBox, label: string, color: string = '#000000', isLocked: boolean = false) {
     const { x, y, w, h } = bbox;
 
     // Box
@@ -60,7 +60,7 @@ export class CanvasRenderer {
     this.ctx.fillText(label, x, y - 5);
   }
 
-  drawTrajectory(points: Array<{ x: number; y: number }>, color: string = '#00e639') {
+  drawTrajectory(points: Array<{ x: number; y: number }>, color: string = '#000000') {
     if (points.length < 2) return;
 
     this.ctx.strokeStyle = color;
@@ -84,9 +84,9 @@ export class CanvasRenderer {
     const cornerSize = 32;
     const margin = 16;
 
-    this.ctx.strokeStyle = '#00e639';
+    this.ctx.strokeStyle = '#000000';
     this.ctx.lineWidth = 2;
-    this.ctx.globalAlpha = 0.5;
+    this.ctx.globalAlpha = 0.3;
 
     // Top-left
     this.ctx.beginPath();
@@ -121,8 +121,8 @@ export class CanvasRenderer {
 
   drawTracks(tracks: Track[], showTrajectories: boolean = true) {
     tracks.forEach(track => {
-      const color = track.is_locked ? '#ff0040' : 
-                    track.confidence < 0.5 ? '#f1c100' : '#00e639';
+      const color = track.is_locked ? '#000000' : 
+                    track.confidence < 0.5 ? '#666666' : '#1a1a1a';
       
       const label = `TARGET_${String(track.track_id).padStart(2, '0')} [${track.class_name.toUpperCase()}] ${(track.confidence * 100).toFixed(0)}%`;
       
@@ -149,22 +149,22 @@ export function drawTracks(
   showTrajectories: boolean = true
 ) {
   tracks.forEach(track => {
-    const color = track.is_locked ? '#ff0040' : 
-                  track.confidence < 0.5 ? '#f1c100' : '#00e639';
+    const color = track.is_locked ? '#000000' : 
+                  track.confidence < 0.5 ? '#666666' : '#1a1a1a';
     
     const { x, y, w, h } = track.bbox;
     
     // Draw bounding box
     ctx.strokeStyle = color;
     ctx.lineWidth = track.is_locked ? 3 : 2;
-    ctx.fillStyle = `${color}15`; // 8% opacity
+    ctx.fillStyle = `${color}08`; // 3% opacity
     ctx.fillRect(x, y, w, h);
     ctx.strokeRect(x, y, w, h);
     
     // Draw label
     const label = `#${track.track_id} ${track.class_name} ${(track.confidence * 100).toFixed(0)}%`;
     ctx.font = 'bold 12px monospace';
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#ffffff';
     ctx.fillRect(x, y - 20, ctx.measureText(label).width + 8, 18);
     ctx.fillStyle = color;
     ctx.fillText(label, x + 4, y - 6);
@@ -174,7 +174,7 @@ export function drawTracks(
       ctx.strokeStyle = color;
       ctx.lineWidth = 2;
       ctx.setLineDash([5, 5]);
-      ctx.globalAlpha = 0.6;
+      ctx.globalAlpha = 0.5;
       
       ctx.beginPath();
       ctx.moveTo(track.trajectory[0].x, track.trajectory[0].y);

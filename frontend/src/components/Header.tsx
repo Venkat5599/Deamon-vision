@@ -1,8 +1,9 @@
 import { useRef } from 'react';
-import { Upload, Activity, Wifi, WifiOff, Video } from 'lucide-react';
+import { Upload, Wifi, WifiOff, Video } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { cn } from '../lib/utils';
+import logoBlack from '../assets/logo_black_transparent_bg.png';
 
 interface HeaderProps {
   isConnected: boolean;
@@ -34,14 +35,18 @@ export function Header({ isConnected, fps, latency, onVideoUpload }: HeaderProps
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Activity className="h-8 w-8 text-primary" strokeWidth={2.5} />
+              <img 
+                src={logoBlack} 
+                alt="Daemon Vision Logo" 
+                className="h-10 w-10 object-contain"
+              />
               <div className={cn(
-                "absolute -right-1 -top-1 h-3 w-3 rounded-full",
-                isConnected ? "bg-primary animate-pulse-glow" : "bg-destructive"
+                "absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-background",
+                isConnected ? "bg-black" : "bg-gray-400"
               )} />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-primary glow-text">
+              <h1 className="text-xl font-bold tracking-tight text-foreground">
                 DAEMON VISION
               </h1>
               <p className="text-xs text-muted-foreground font-mono">
@@ -54,15 +59,15 @@ export function Header({ isConnected, fps, latency, onVideoUpload }: HeaderProps
         {/* Status and Actions */}
         <div className="flex items-center gap-4">
           {/* Metrics */}
-          <div className="hidden md:flex items-center gap-4 px-4 py-2 rounded-lg bg-card border border-border/50">
+          <div className="hidden md:flex items-center gap-4 px-4 py-2 rounded-lg bg-card border border-border">
             <div className="flex flex-col items-end">
               <span className="text-xs text-muted-foreground font-mono">FPS</span>
-              <span className="text-sm font-bold font-mono text-primary">{fps.toFixed(1)}</span>
+              <span className="text-sm font-bold font-mono text-foreground">{fps.toFixed(1)}</span>
             </div>
             <div className="h-8 w-px bg-border" />
             <div className="flex flex-col items-end">
               <span className="text-xs text-muted-foreground font-mono">LATENCY</span>
-              <span className="text-sm font-bold font-mono text-primary">{latency.toFixed(0)}ms</span>
+              <span className="text-sm font-bold font-mono text-foreground">{latency.toFixed(0)}ms</span>
             </div>
           </div>
 

@@ -13,21 +13,21 @@ interface TrackCardProps {
 export function TrackCard({ track, onLock }: TrackCardProps) {
   const getClassColor = (className: string) => {
     const colors: Record<string, string> = {
-      person: 'text-blue-400',
-      car: 'text-yellow-400',
-      truck: 'text-orange-400',
-      bus: 'text-purple-400',
-      motorcycle: 'text-pink-400',
-      bicycle: 'text-green-400',
-      airplane: 'text-cyan-400',
+      person: 'text-gray-700',
+      car: 'text-gray-800',
+      truck: 'text-gray-900',
+      bus: 'text-gray-600',
+      motorcycle: 'text-gray-700',
+      bicycle: 'text-gray-600',
+      airplane: 'text-gray-800',
     };
-    return colors[className] || 'text-gray-400';
+    return colors[className] || 'text-gray-500';
   };
 
   return (
     <Card className={cn(
-      "transition-all duration-200 hover:shadow-lg hover:shadow-primary/20",
-      track.is_locked && "ring-2 ring-primary shadow-lg shadow-primary/30"
+      "transition-all duration-200 hover:shadow-lg",
+      track.is_locked && "ring-2 ring-foreground shadow-lg"
     )}>
       <CardContent className="p-4">
         <div className="flex items-start justify-between mb-3">
@@ -85,7 +85,7 @@ export function TrackCard({ track, onLock }: TrackCardProps) {
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-2 border-t border-border/50">
+          <div className="flex items-center justify-between pt-2 border-t border-border">
             <span className="text-muted-foreground">Frames</span>
             <span className="font-mono font-medium">
               {track.frames_since_update}
