@@ -1,0 +1,35 @@
+[
+  {
+    "timestamp": "2026-03-26T10:30:00.000Z",
+    "gps": {
+      "lat": -6.2088,
+      "lon": 106.8456
+    },
+    "altitude": 150.0,
+    "gimbal_azimuth": 0.0,
+    "gimbal_elevation": -45.0,
+    "heading": 90.0
+  },
+  {
+    "timestamp": "2026-03-26T10:30:00.100Z",
+    "gps": {
+      "lat": -6.2088,
+      "lon": 106.8457
+    },
+    "altitude": 150.5,
+    "gimbal_azimuth": 0.5,
+    "gimbal_elevation": -45.2,
+    "heading": 90.1
+  },
+  {
+    "timestamp": "2026-03-26T10:30:00.200Z",
+    "gps": {
+      "lat": -6.2089,
+      "lon": 106.8458
+    },
+    "altitude": 151.0,
+    "gimbal_azimuth": 1.0,
+    "gimbal_elevation": -45.5,
+    "heading": 90.2
+  }
+]

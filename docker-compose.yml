@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  daemon-vision:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: daemon-vision
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./config.yaml:/app/config.yaml
+      - ./logs:/app/logs
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    networks:
+      - daemon-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: daemon-vision-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - daemon-vision
+    restart: unless-stopped
+    networks:
+      - daemon-network
+
+  # Optional: Redis for multi-node deployment
+  # Uncomment to enable Redis queue backend
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: daemon-redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis-data:/data
+  #   restart: unless-stopped
+  #   networks:
+  #     - daemon-network
+
+networks:
+  daemon-network:
+    driver: bridge
+
+# volumes:
+#   redis-data:

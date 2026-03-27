@@ -1,0 +1,38 @@
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Computer Vision
+opencv-python==4.8.1.78
+opencv-contrib-python==4.8.1.78
+ultralytics>=8.0.0
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Tracking
+numpy==1.24.3
+scipy==1.11.4
+filterpy==1.4.5
+
+# Async & Queue
+aiofiles==23.2.1
+python-multipart==0.0.6
+websockets==12.0
+
+# Utilities
+pyyaml==6.0.1
+python-dateutil==2.8.2
+pillow==10.1.0
+
+# Optional: Redis support
+redis==5.0.1
+aioredis==2.0.1
+
+# Development
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+black==23.11.0
+ruff==0.1.6

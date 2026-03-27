@@ -1,0 +1,63 @@
+sensor:
+  video_source: "data/uploaded_video.mp4"  # Uploaded video
+  telemetry_source: "data/telemetry.json"
+  fps: 30
+  frame_buffer_size: 10
+  enable_stabilization: true
+  enable_undistortion: false
+
+detection:
+  model: "yolov8n.pt"  # Fast and accurate enough
+  confidence_threshold: 0.20  # Lower to catch more objects early
+  iou_threshold: 0.5  # Higher to reduce duplicate detections
+  target_classes: ["person", "car", "truck", "bus", "motorcycle", "bicycle", "airplane"]
+  device: "cuda"
+  half_precision: false
+  imgsz: 640  # Good balance of speed and accuracy
+  max_det: 100  # Maximum detections per image
+
+tracking:
+  tracker: "bytetrack"
+  track_thresh: 0.35  # Lower threshold for better initial detection
+  track_buffer: 300  # 10 seconds at 30fps - persistent tracking for drones
+  match_thresh: 0.65  # Lower for better re-identification
+  min_box_area: 30  # Smaller minimum to track distant objects
+  trajectory_history: 300  # 10 seconds of history for trajectory prediction
+  
+  # ByteTrack specific optimizations for persistent tracking
+  frame_rate: 30
+  mot20: false  # Set true for crowded scenes
+
+locking:
+  occlusion_tolerance_frames: 300  # 10 seconds at 30fps - persistent lock for drones
+  priority_weights:
+    distance: 0.4
+    velocity: 0.3
+    class_priority: 0.3
+  class_priority_map:
+    person: 1.0
+    car: 0.8
+    truck: 0.7
+    airplane: 0.9
+
+coordinate_transform:
+  # Simplified flat-earth projection
+  earth_radius_m: 6371000
+  camera_fov_horizontal: 60  # degrees
+  camera_fov_vertical: 45    # degrees
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins: ["*"]
+  websocket_heartbeat_interval: 5  # seconds
+  max_connections: 100
+
+queue:
+  backend: "asyncio"  # asyncio or redis
+  redis_url: "redis://localhost:6379"
+  max_queue_size: 100
+
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

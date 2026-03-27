@@ -1,0 +1,14 @@
+# Minimal requirements for quick start
+fastapi
+uvicorn[standard]
+pydantic
+opencv-python
+numpy
+scipy
+filterpy
+aiofiles
+python-multipart
+websockets
+pyyaml
+python-dateutil
+pillow
