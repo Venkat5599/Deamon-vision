@@ -160,7 +160,7 @@ export function VideoFeed({
           width={1920}
           height={1080}
           onClick={handleClick}
-          className="cursor-crosshair"
+          className="cursor-crosshair bg-gray-50"
           style={{ 
             imageRendering: 'auto',
             display: 'block'

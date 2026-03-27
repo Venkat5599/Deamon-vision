@@ -307,11 +307,20 @@ class DaemonVisionAPI:
         if not self.connection_manager.active_connections:
             return
         
+        # Calculate processing metrics
+        import time
+        start_time = time.time()
+        
         # Prepare message
         message = {
             "type": "track_update",
             "tracks": [track.dict() for track in tracks],
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
+            "metrics": {
+                "active_tracks": len(tracks),
+                "fps": getattr(self.pipeline, 'current_fps', 0) if self.pipeline else 0,
+                "latency": 0  # Will be calculated after encoding
+            }
         }
         
         # Add frame if provided (original resolution, maximum quality)
@@ -326,6 +335,10 @@ class DaemonVisionAPI:
             ])
             frame_base64 = base64.b64encode(buffer).decode('utf-8')
             message["frame"] = frame_base64
+        
+        # Calculate latency
+        latency_ms = (time.time() - start_time) * 1000
+        message["metrics"]["latency"] = round(latency_ms, 2)
         
         await self.connection_manager.broadcast(message)
     

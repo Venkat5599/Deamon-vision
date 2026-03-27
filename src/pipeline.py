@@ -47,6 +47,8 @@ class DaemonVisionPipeline:
         # Performance metrics
         self.total_detections = 0
         self.total_tracks = 0
+        self.current_fps = 0.0
+        self.last_fps_update = datetime.now()
     
     def _load_config(self) -> dict:
         """Load configuration from YAML file."""
@@ -236,6 +238,7 @@ class DaemonVisionPipeline:
         """Log performance metrics."""
         elapsed = (datetime.now() - self.start_time).total_seconds()
         pipeline_fps = self.frame_count / elapsed if elapsed > 0 else 0
+        self.current_fps = pipeline_fps  # Store for API access
         
         logger.info(
             f"Frame {self.frame_count} | "

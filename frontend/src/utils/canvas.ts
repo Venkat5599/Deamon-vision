@@ -156,18 +156,24 @@ export function drawTracks(
     
     // Draw bounding box
     ctx.strokeStyle = color;
-    ctx.lineWidth = track.is_locked ? 3 : 2;
+    ctx.lineWidth = track.is_locked ? 4 : 3;
     ctx.fillStyle = `${color}08`; // 3% opacity
     ctx.fillRect(x, y, w, h);
     ctx.strokeRect(x, y, w, h);
     
-    // Draw label
+    // Draw label with better visibility
     const label = `#${track.track_id} ${track.class_name} ${(track.confidence * 100).toFixed(0)}%`;
-    ctx.font = 'bold 12px monospace';
+    ctx.font = 'bold 14px monospace';
+    const labelWidth = ctx.measureText(label).width + 12;
+    const labelHeight = 22;
+    
+    // Draw label background (black)
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(x, y - labelHeight - 2, labelWidth, labelHeight);
+    
+    // Draw label text (white)
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(x, y - 20, ctx.measureText(label).width + 8, 18);
-    ctx.fillStyle = color;
-    ctx.fillText(label, x + 4, y - 6);
+    ctx.fillText(label, x + 6, y - 8);
     
     // Draw trajectory
     if (showTrajectories && track.trajectory.length > 1) {

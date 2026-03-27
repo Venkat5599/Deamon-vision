@@ -170,8 +170,14 @@ class SensorDataCollector:
         # Read frame
         ret, frame = self.cap.read()
         if not ret:
-            logger.info("End of video stream")
-            return None
+            # Loop video - restart from beginning
+            logger.info("End of video - looping back to start")
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            self.frame_count = 0
+            ret, frame = self.cap.read()
+            if not ret:
+                logger.error("Failed to restart video")
+                return None
         
         self.frame_count += 1
         frame_timestamp = datetime.now()

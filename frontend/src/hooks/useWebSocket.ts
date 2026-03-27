@@ -7,6 +7,8 @@ export function useWebSocket() {
   const [isConnected, setIsConnected] = useState(false);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const [currentFrame, setCurrentFrame] = useState<string | null>(null);
+  const [fps, setFps] = useState(0);
+  const [latency, setLatency] = useState(0);
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
@@ -29,7 +31,21 @@ export function useWebSocket() {
             
             // Update frame if provided
             if ((message as any).frame) {
-              setCurrentFrame(`data:image/jpeg;base64,${(message as any).frame}`);
+              const frameData = `data:image/jpeg;base64,${(message as any).frame}`;
+              setCurrentFrame(frameData);
+              console.log('Frame received, size:', (message as any).frame.length);
+            }
+            
+            // Update metrics if provided
+            if ((message as any).metrics) {
+              const metrics = (message as any).metrics;
+              console.log('Metrics received:', metrics);
+              if (metrics.fps !== undefined) {
+                setFps(metrics.fps);
+              }
+              if (metrics.latency !== undefined) {
+                setLatency(metrics.latency);
+              }
             }
           } else if (message.type === 'connected') {
             console.log('Connected to Daemon Vision:', message.message);
@@ -94,6 +110,8 @@ export function useWebSocket() {
     isConnected,
     lastUpdate,
     currentFrame,
+    fps,
+    latency,
     reconnect: connect
   };
 }

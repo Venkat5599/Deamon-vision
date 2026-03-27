@@ -10,44 +10,20 @@ import { api } from './utils/api';
 import type { Track } from './types';
 
 function App() {
-  const { tracks, isConnected, lastUpdate, currentFrame } = useWebSocket();
+  const { tracks, isConnected, currentFrame, fps: wsFps, latency: wsLatency } = useWebSocket();
   const [showTrajectories, setShowTrajectories] = useState(true);
   const [fps, setFps] = useState(0);
   const [latency, setLatency] = useState(0);
 
-  // Calculate FPS from updates
+  // Use WebSocket metrics when available
   useEffect(() => {
-    if (!lastUpdate) return;
-    
-    const interval = setInterval(() => {
-      const now = new Date();
-      const diff = now.getTime() - lastUpdate.getTime();
-      const calculatedFps = diff > 0 ? 1000 / diff : 0;
-      setFps(Math.min(calculatedFps, 120));
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [lastUpdate]);
-
-  // Fetch health metrics
-  useEffect(() => {
-    const fetchHealth = async () => {
-      try {
-        const health = await api.getHealth();
-        // Update latency if available
-        if (health.latency !== undefined) {
-          setLatency(health.latency);
-        }
-      } catch (error) {
-        console.error('Failed to fetch health:', error);
-      }
-    };
-
-    const interval = setInterval(fetchHealth, 5000);
-    fetchHealth();
-
-    return () => clearInterval(interval);
-  }, []);
+    if (wsFps > 0) {
+      setFps(wsFps);
+    }
+    if (wsLatency > 0) {
+      setLatency(wsLatency);
+    }
+  }, [wsFps, wsLatency]);
 
   const handleVideoUpload = useCallback(async (file: File) => {
     const uploadPromise = api.uploadVideo(file);
@@ -72,21 +48,36 @@ function App() {
   const handleLock = useCallback(async (trackId: number) => {
     try {
       const lockedTrack = tracks.find(t => t.track_id === trackId);
-      if (lockedTrack?.is_locked) {
+      
+      // Check if track exists before trying to lock
+      if (!lockedTrack) {
+        toast.error(`Track #${trackId} is no longer visible`);
+        return;
+      }
+      
+      if (lockedTrack.is_locked) {
         await api.unlockTarget();
         toast.success('Target unlocked');
       } else {
-        await api.lockTarget(trackId);
-        toast.success(`Locked onto target #${trackId}`);
+        try {
+          await api.lockTarget(trackId);
+          toast.success(`🎯 Locked onto ${lockedTrack.class_name} #${trackId}`);
+        } catch (lockError: any) {
+          // Track disappeared between check and lock
+          toast.warning(`Track #${trackId} moved out of frame. Try again.`);
+        }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to lock/unlock target:', error);
-      toast.error('Failed to lock target');
+      toast.error('Lock operation failed');
     }
   }, [tracks]);
 
   const handleCanvasClick = useCallback((x: number, y: number) => {
-    if (tracks.length === 0) return;
+    if (tracks.length === 0) {
+      toast.info('No active tracks to lock');
+      return;
+    }
     
     // Find nearest track to click position
     let nearestTrack: Track | undefined;
@@ -105,6 +96,8 @@ function App() {
 
     if (nearestTrack) {
       handleLock(nearestTrack.track_id);
+    } else {
+      toast.info('Click closer to a tracked object');
     }
   }, [tracks, handleLock]);
 
@@ -123,6 +116,8 @@ function App() {
         const track = tracks.find(t => t.track_id === trackId);
         if (track) {
           handleLock(trackId);
+        } else {
+          toast.info(`Track #${trackId} not found. Check Active Tracks sidebar.`);
         }
       }
     };
